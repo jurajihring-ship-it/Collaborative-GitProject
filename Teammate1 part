@@ -1,0 +1,56 @@
+namespace praca_na_hodine_2;
+
+public static class SuborHelper
+{
+    public static void VytvorSubor(string cesta)
+    {
+        Random rand = new Random();
+        string obsah = "";
+
+        for (int i = 0; i < 10000; i++)
+        {
+            int cislo = rand.Next(1, 1000);
+
+            if (i == 9999)
+            {
+                obsah += cislo;
+            }
+            else
+            {
+                obsah += cislo + ",";
+            }
+        }
+
+        File.WriteAllText(cesta, obsah);
+    }
+
+    public static List<int> NaciatajCisla(string cesta)
+    {
+        List<int> cisla = new List<int>();
+        string text = File.ReadAllText(cesta);
+        
+        string slovo = "";
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] != ',')
+            {
+                slovo += text[i];
+            }
+            else
+            {
+                if (slovo != "")
+                {
+                    cisla.Add(int.Parse(slovo));
+                    slovo = "";
+                }
+            }
+        }
+        
+        if (slovo != "")
+        {
+            cisla.Add(int.Parse(slovo));
+        }
+
+        return cisla;
+    }
+}
